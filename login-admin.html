@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Login</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: url('https://media.collegedekho.com/media/img/institute/crawled_images/Assam_Don_Bosco_Universityu.jpg') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #222;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      background: #fff;
+      padding: 40px 35px;
+      border-radius: 18px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .container img {
+      width: 90px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      font-weight: 700;
+      font-size: 26px;
+      margin-bottom: 30px;
+    }
+
+    form input[type="email"],
+    form input[type="password"] {
+      width: 100%;
+      padding: 14px 18px;
+      margin: 12px 0 18px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .show-password-container {
+      text-align: left;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .show-password-container input {
+      vertical-align: middle;
+      margin-right: 8px;
+      cursor: pointer;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px 0;
+      background-color: #007bff;
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .error {
+      color: #d93025;
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 15px;
+    }
+
+    p {
+      margin-top: 20px;
+      font-size: 15px;
+      color: #444;
+    }
+
+    p a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    p a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 420px) {
+      .container {
+        padding: 30px 25px;
+        max-width: 90vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="https://www.iau-hesd.net/sites/default/files/styles/medium/public/media_logo/adbu.jpg?itok=20oSsoUl" alt="Logo" />
+    <h2>Admin Login</h2>
+    <div id="error" class="error"></div>
+
+    <form action="/admin/login" method="POST">
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+
+      <div class="show-password-container">
+        <label>
+          <input type="checkbox" id="togglePassword"> Show Password
+        </label>
+      </div>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <p>Don't have an account? <a href="/register-choice">Register</a></p>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('error') === 'invalid') {
+      document.getElementById('error').textContent = 'Invalid email or password.';
+    }
+
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.querySelector('input[name="password"]');
+    togglePassword.addEventListener('change', () => {
+      passwordInput.type = togglePassword.checked ? 'text' : 'password';
+    });
+  </script>
+</body>
+</html>

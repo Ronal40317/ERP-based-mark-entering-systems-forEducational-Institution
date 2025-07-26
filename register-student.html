@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Registration</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      background: url('https://media.collegedekho.com/media/img/institute/crawled_images/Assam_Don_Bosco_Universityu.jpg') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      position: relative;
+      color: #333;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 400px;
+      margin: 5% auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px 35px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    img.logo {
+      width: 110px;
+      margin-bottom: 25px;
+      cursor: default;
+      user-select: none;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-weight: 700;
+      font-size: 1.9rem;
+      color: #222;
+      letter-spacing: 1px;
+    }
+
+    #error {
+      color: #d32f2f;
+      margin-bottom: 18px;
+      min-height: 22px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: opacity 0.3s ease;
+    }
+
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="date"],
+    form input[type="password"] {
+      width: 100%;
+      padding: 12px 14px;
+      margin: 10px 0 20px 0;
+      border: 1.8px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    form input:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+      outline: none;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      background-color: #007bff;
+      border: none;
+      padding: 14px 0;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+      box-shadow: 0 7px 20px rgba(0, 86, 179, 0.5);
+    }
+
+    @media (max-width: 450px) {
+      .container {
+        margin: 10% 20px;
+        padding: 25px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="https://www.iau-hesd.net/sites/default/files/styles/medium/public/media_logo/adbu.jpg?itok=20oSsoUl" alt="Logo" class="logo" />
+    <h2>Student Registration</h2>
+    <div id="error"></div>
+    <form action="/register/student" method="POST">
+      <input type="hidden" name="role" value="student" />
+      <input type="text" name="name" placeholder="First Name" required />
+      <input type="text" name="surname" placeholder="Surname" required />
+      <input type="text" name="studentId" placeholder="Student ID" required />
+      <input type="text" name="department" placeholder="Department" required />
+      <input type="number" name="semester" placeholder="Semester" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="date" name="dob" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('error') === 'exists') {
+      const errorDiv = document.getElementById('error');
+      errorDiv.textContent = 'User already exists.';
+      errorDiv.style.opacity = '1';
+    }
+  </script>
+</body>
+</html>
