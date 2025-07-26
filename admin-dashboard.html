@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #f3e5f5, #e1f5fe);
+    }
+
+    .dashboard-container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #4a148c;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background-color: #6a1b9a;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f3e5f5;
+    }
+
+    table input[type="number"] {
+      width: 60px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    button[type="submit"] {
+      display: block;
+      margin: 30px auto 10px auto;
+      padding: 10px 30px;
+      background-color: #6a1b9a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #4a148c;
+    }
+
+    .logout-btn {
+      display: inline-block;
+      text-align: center;
+      margin-top: 15px;
+      padding: 8px 20px;
+      background-color: #e53935;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background-color: #c62828;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <h2>Admin Dashboard</h2>
+    <form action="/admin/update-marks" method="POST">
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Chemistry</th>
+            <th>Maths</th>
+            <th>BEE</th>
+            <th>UHV</th>
+          </tr>
+        </thead>
+        <tbody id="studentTableBody">
+          <!-- Filled by JavaScript -->
+        </tbody>
+      </table>
+      <button type="submit">Save Marks</button>
+    </form>
+    <div style="text-align: center;">
+      <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+  </div>
+
+  <script>
+    async function loadStudents() {
+      const res = await fetch('/api/students');
+      if (!res.ok) return alert("Error fetching student list");
+
+      const students = await res.json();
+      const tbody = document.getElementById('studentTableBody');
+      students.forEach((student) => {
+        const row = `
+          <tr>
+            <td>
+              <input type="hidden" name="usernames[]" value="${student.username}">
+              ${student.username}
+            </td>
+            <td><input type="number" name="chemistry[]" value="${student.marks?.chemistry || ''}" min="0" max="100"></td>
+            <td><input type="number" name="maths[]" value="${student.marks?.maths || ''}" min="0" max="100"></td>
+            <td><input type="number" name="bee[]" value="${student.marks?.BEE || ''}" min="0" max="100"></td>
+            <td><input type="number" name="uhv[]" value="${student.marks?.UHV || ''}" min="0" max="100"></td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+      });
+    }
+
+    loadStudents();
+  </script>
+</body>
+</html>
